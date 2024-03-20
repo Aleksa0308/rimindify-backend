@@ -14,7 +14,7 @@ export class ClientGroupService {
         });
     }
 
-    async getClientGroup(userId: number, clientGroupId: number) {
+    async getClientGroupById(userId: number, clientGroupId: number) {
         const clientGroup = await this.prisma.clientGroup.findUnique({
             where: {
                 clientGroupId: clientGroupId,
@@ -35,6 +35,7 @@ export class ClientGroupService {
                 data: {
                     userId: userId,
                     name: dto.name,
+                    description: dto.description
                 }
             });
         }catch (error){
@@ -51,6 +52,7 @@ export class ClientGroupService {
                 },
                 data: {
                     name: dto.name,
+                    description: dto.description
                 }
             });
         }catch (error){

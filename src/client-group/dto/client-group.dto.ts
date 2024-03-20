@@ -4,4 +4,7 @@ export class ClientGroupDto {
     @IsString()
     @IsNotEmpty()
     name: string;
+
+    @IsString()
+    description: string;
 }

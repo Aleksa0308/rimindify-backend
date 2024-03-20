@@ -20,40 +20,42 @@ model User {
   password     String
   whatsapp     String?
   viber        String?
-  clientGroups ClientGroup[] // A user can have many client groups
-  clients      Client[]
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
+  Message      Message[]
+  clientGroups ClientGroup[] // A user can have many client groups
+  clients      Client[]
 
   @@map("users")
 }
 
 model Client {
   clientId            Int                   @id @default(autoincrement())
+  userId              Int
   firstName           String
   lastName            String?
   nickName            String?
   phone               String
-  appointment          DateTime
-  user                User                  @relation(fields: [userId], references: [userId])
-  userId              Int
-  clientGroups        ClientGroup[]
+  appointment         DateTime
   createdAt           DateTime              @default(now())
   updatedAt           DateTime              @updatedAt
+  clientGroups        ClientGroup[]
   ClientOnClientGroup ClientOnClientGroup[]
+  user                User                  @relation(fields: [userId], references: [userId])
 
   @@map("clients")
 }
 
 model ClientGroup {
   clientGroupId       Int                   @id @default(autoincrement())
-  name                String
-  clients             Client[]
-  user                User                  @relation(fields: [userId], references: [userId])
   userId              Int
+  name                String
+  description         String?
+  clients             Client[]
   createdAt           DateTime              @default(now())
   updatedAt           DateTime              @updatedAt
   ClientOnClientGroup ClientOnClientGroup[]
+  user                User                  @relation(fields: [userId], references: [userId])
 
   @@map("client_groups")
 }
@@ -62,10 +64,22 @@ model ClientOnClientGroup {
   id            Int         @id @default(autoincrement())
   clientId      Int
   clientGroupId Int
-  client        Client      @relation(fields: [clientId], references: [clientId])
-  clientGroup   ClientGroup @relation(fields: [clientGroupId], references: [clientGroupId])
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
+  client        Client      @relation(fields: [clientId], references: [clientId])
+  clientGroup   ClientGroup @relation(fields: [clientGroupId], references: [clientGroupId])
 
   @@map("client_on_client_group")
+}
+
+model Message {
+  messageId Int      @id @default(autoincrement())
+  userId    Int
+  title     String   @db.VarChar(1500)
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [userId])
+
+  @@map("messages")
 }
