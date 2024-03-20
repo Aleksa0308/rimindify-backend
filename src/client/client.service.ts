@@ -39,7 +39,7 @@ export class ClientService {
                     nickName: dto.nickName,
                     phone: dto.phone,
                     appointment: dto.appointment
-                }
+                },
             });
         }catch (error){
             throw error;
