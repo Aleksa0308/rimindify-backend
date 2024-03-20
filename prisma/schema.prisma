@@ -14,14 +14,58 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  name      String?
-  password  String
-  whatsapp  String?
-  viber     String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  userId       Int           @id @default(autoincrement())
+  email        String        @unique
+  name         String?
+  password     String
+  whatsapp     String?
+  viber        String?
+  clientGroups ClientGroup[] // A user can have many client groups
+  clients      Client[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 
   @@map("users")
+}
+
+model Client {
+  clientId            Int                   @id @default(autoincrement())
+  firstName           String
+  lastName            String?
+  nickName            String?
+  phone               String
+  appointment          DateTime
+  user                User                  @relation(fields: [userId], references: [userId])
+  userId              Int
+  clientGroups        ClientGroup[]
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+  ClientOnClientGroup ClientOnClientGroup[]
+
+  @@map("clients")
+}
+
+model ClientGroup {
+  clientGroupId       Int                   @id @default(autoincrement())
+  name                String
+  clients             Client[]
+  user                User                  @relation(fields: [userId], references: [userId])
+  userId              Int
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+  ClientOnClientGroup ClientOnClientGroup[]
+
+  @@map("client_groups")
+}
+
+model ClientOnClientGroup {
+  id            Int         @id @default(autoincrement())
+  clientId      Int
+  clientGroupId Int
+  client        Client      @relation(fields: [clientId], references: [clientId])
+  clientGroup   ClientGroup @relation(fields: [clientGroupId], references: [clientGroupId])
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@map("client_on_client_group")
 }
