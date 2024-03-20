@@ -23,12 +23,12 @@ export class AuthService{
                     password: hashedPassword
                 },
                 select:{
-                    id: true,
+                    userId: true,
                     email: true
                 }
             });
 
-            return this.signToken(user.id, user.email);
+            return this.signToken(user.userId, user.email);
         }catch (error){
             if(error instanceof PrismaClientKnownRequestError){
                 if(error.code === 'P2002'){
@@ -49,7 +49,7 @@ export class AuthService{
         const valid = await argon.verify(user.password, dto.password);
         if(!valid) throw new ForbiddenException('Wrong credentials');
 
-        return this.signToken(user.id, user.email);
+        return this.signToken(user.userId, user.email);
     }
 
     async signToken(userId: number, email: string): Promise<{access_token: string}>{
