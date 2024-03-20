@@ -6,6 +6,7 @@ import {ConfigModule} from "@nestjs/config";
 import { ClientModule } from './client/client.module';
 import { ClientGroupService } from './client-group/client-group.service';
 import { ClientGroupModule } from './client-group/client-group.module';
+import { MessageModule } from './message/message.module';
 
 @Module({
   imports: [
@@ -16,7 +17,8 @@ import { ClientGroupModule } from './client-group/client-group.module';
       isGlobal: true,
     }),
     ClientModule,
-    ClientGroupModule
+    ClientGroupModule,
+    MessageModule
   ],
   providers: [],
 })

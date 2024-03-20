@@ -16,8 +16,8 @@ export class ClientGroupController {
     }
 
     @Get(':id')
-    async getClientGroup(@GetUser('userId') userId: number, @Param('id', ParseIntPipe) id: number){
-        return this.clientGroupService.getClientGroup(userId, id);
+    async getClientGroupById(@GetUser('userId') userId: number, @Param('id', ParseIntPipe) id: number){
+        return this.clientGroupService.getClientGroupById(userId, id);
     }
 
     @Post()

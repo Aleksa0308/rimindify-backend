@@ -15,8 +15,8 @@ export class ClientController {
     }
 
     @Get(':id')
-    getClient(@GetUser('userId') userId: number, @Param('id', ParseIntPipe) id: number){
-        return this.clientService.getClient(userId, id);
+    getClientById(@GetUser('userId') userId: number, @Param('id', ParseIntPipe) id: number){
+        return this.clientService.getClientById(userId, id);
     }
 
     @Post()
