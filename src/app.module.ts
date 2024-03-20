@@ -4,6 +4,8 @@ import { UserModule } from './user/user.module';
 import { PrismaModule } from './prisma/prisma.module';
 import {ConfigModule} from "@nestjs/config";
 import { ClientModule } from './client/client.module';
+import { ClientGroupService } from './client-group/client-group.service';
+import { ClientGroupModule } from './client-group/client-group.module';
 
 @Module({
   imports: [
@@ -13,7 +15,9 @@ import { ClientModule } from './client/client.module';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    ClientModule
+    ClientModule,
+    ClientGroupModule
   ],
+  providers: [],
 })
 export class AppModule {}
