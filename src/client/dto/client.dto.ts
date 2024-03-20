@@ -1,4 +1,5 @@
-import {IsNotEmpty, IsString} from "class-validator";
+import {IsDate, IsNotEmpty, IsString} from "class-validator";
+import {Type} from "class-transformer";
 
 export class ClientDto{
     @IsNotEmpty()
@@ -11,6 +12,8 @@ export class ClientDto{
     @IsNotEmpty()
     @IsString()
     phone: string;
+    @Type(() => Date)
+    @IsDate()
     @IsNotEmpty()
     appointment: Date;
 }
