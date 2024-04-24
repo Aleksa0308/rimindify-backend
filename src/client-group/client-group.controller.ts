@@ -1,4 +1,4 @@
-import {Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, UseGuards} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query, UseGuards} from '@nestjs/common';
 import {ClientGroupService} from "./client-group.service";
 import {GetUser} from "../auth/decorator";
 import {JwtGuard} from "../auth/guard";
@@ -20,11 +20,20 @@ export class ClientGroupController {
         return this.clientGroupService.getClientGroupById(userId, id);
     }
 
+    @Get(':id/missing-clients')
+    async getMissingClients(@GetUser('userId') userId: number, @Param('id', ParseIntPipe) id: number, @Query('search') search: string){
+        return this.clientGroupService.getMissingClients(userId, id, search);
+    }
+
     @Post()
     async createClientGroup(@GetUser('userId') userId: number, @Body() dto: ClientGroupDto) {
         return this.clientGroupService.createClientGroup(userId, dto);
     }
 
+    @Post(':id/add-client')
+        async addClientToGroup(@GetUser('userId') userId: number, @Param('id', ParseIntPipe) id: number, @Body() dto: {clientId: number}) {
+        return this.clientGroupService.addClientToGroup(userId, id, dto.clientId);
+    }
     @Put(':id')
     async updateClientGroup(@GetUser('userId') userId: number,
                             @Param('id', ParseIntPipe) id: number,
@@ -35,5 +44,10 @@ export class ClientGroupController {
     @Delete(':id')
     async deleteClientGroup(@GetUser('userId') userId: number, @Param('id', ParseIntPipe) id: number) {
         return this.clientGroupService.deleteClientGroup(userId, id);
+    }
+
+    @Delete(':id/remove-client/:clientId')
+    async removeClientFromGroup(@GetUser('userId') userId: number, @Param('id', ParseIntPipe) id: number, @Param('clientId', ParseIntPipe) clientId: number) {
+        return this.clientGroupService.removeClientFromGroup(userId, id, clientId);
     }
 }

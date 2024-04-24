@@ -18,7 +18,7 @@ export class ClientService {
         const client = await this.prisma.client.findUnique({
             where: {
                 clientId: clientId,
-                userId: userId
+                // userId: userId
             }
         });
 
@@ -51,7 +51,7 @@ export class ClientService {
             return this.prisma.client.update({
                 where: {
                     clientId: clientId,
-                    userId: userId
+                    // userId: userId
                 },
                 data: {
                     firstName: dto.firstName,
@@ -71,7 +71,7 @@ export class ClientService {
             return this.prisma.client.delete({
                 where: {
                     clientId: clientId,
-                    userId: userId
+                    // userId: userId
                 }
             });
         }catch (error){
