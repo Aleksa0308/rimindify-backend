@@ -44,7 +44,7 @@ export class MessageService {
         return this.prisma.message.update({
             where: {
                 messageId,
-                userId
+                // userId
             },
             data: {
                 title: dto.title,
@@ -57,7 +57,7 @@ export class MessageService {
         return this.prisma.message.delete({
             where: {
                 messageId,
-                userId
+                // userId
             }
         });
     }
