@@ -45,4 +45,9 @@ export class ClientGroupController {
     async deleteClientGroup(@GetUser('userId') userId: number, @Param('id', ParseIntPipe) id: number) {
         return this.clientGroupService.deleteClientGroup(userId, id);
     }
+
+    @Delete(':id/remove-client/:clientId')
+    async removeClientFromGroup(@GetUser('userId') userId: number, @Param('id', ParseIntPipe) id: number, @Param('clientId', ParseIntPipe) clientId: number) {
+        return this.clientGroupService.removeClientFromGroup(userId, id, clientId);
+    }
 }

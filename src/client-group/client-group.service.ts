@@ -27,8 +27,11 @@ export class ClientGroupService {
         }
 
         // map over the clients and return the client
+        // but to single client add from what group he is
         const result = clientGroup.map((clientGroup)=> {
-            return {...clientGroup, clients: clientGroup.clients.map((client)=> client.client)}
+            return {...clientGroup, clients: clientGroup.clients.map((client)=> {
+                    return {...client.client, clientGroupId: clientGroup.clientGroupId}
+                })}
         })
 
         return result[0];
@@ -125,6 +128,26 @@ export class ClientGroupService {
             where: {
                 clientGroupId: clientGroupId,
                 // userId: userId
+            }
+        });
+    }
+
+    async removeClientFromGroup(userId: number, clientGroupId: number, clientId: number) {
+        const clientGroup = await this.prisma.clientClientGroup.findFirst({
+            where: {
+                clientGroupId: clientGroupId,
+                clientId: clientId
+            }
+        });
+
+        if (!clientGroup) {
+            throw new NotFoundException(`Client is not in the group`);
+        }
+
+        return this.prisma.clientClientGroup.deleteMany({
+            where: {
+                clientGroupId: clientGroupId,
+                clientId: clientId
             }
         });
     }
