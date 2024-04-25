@@ -7,6 +7,7 @@ import { ClientModule } from './client/client.module';
 import { ClientGroupService } from './client-group/client-group.service';
 import { ClientGroupModule } from './client-group/client-group.module';
 import { MessageModule } from './message/message.module';
+import { ScheduleModule } from './schedule/schedule.module';
 
 @Module({
   imports: [
@@ -18,7 +19,8 @@ import { MessageModule } from './message/message.module';
     }),
     ClientModule,
     ClientGroupModule,
-    MessageModule
+    MessageModule,
+    ScheduleModule
   ],
   providers: [],
 })
